@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Local do evento{% endblock %}
+{% block content %}
+<!-- TODO: todo o código-fonte do arquivo evento.html -->
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Local do evento</h1>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar</a>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="card-title">{{ evento.nome }}</h4>
+            <p class="card-text"><strong>Data:</strong> {{ evento.data.strftime('%d/%m/%Y') if evento.data else '—' }}
+                &nbsp; <strong>Hora:</strong> {{ evento.hora.strftime('%H:%M') if evento.hora else '—' }}</p>
+            <p class="card-text"><strong>Idade mínima:</strong> {{ evento.idade_minima if evento.idade_minima is not none else '—' }}</p>
+            <p class="card-text"><strong>Local:</strong> {{ evento.local or '—' }}</p>
+            <p class="card-text"><strong>Cidade:</strong> {{ evento.cidade or '—' }} &nbsp; <strong>UF:</strong> {{ evento.uf or '—' }} &nbsp; <strong>CEP:</strong> {{ evento.cep or '—' }}</p>
+        </div>
+    </div>
+
+    <h5>Mapa de localização</h5>
+    <p class="text-muted">O mapa é carregado automaticamente a partir do endereço do evento (em português). Você pode aproximar/afastar e mover o mapa.</p>
+
+    {% if map_html %}
+    <div class="mb-3">{{ map_html|safe }}</div>
+    {% else %}
+    <div class="alert alert-warning">{{ map_error }}</div>
+    {% endif %}
+</div>
+{% endblock %}
